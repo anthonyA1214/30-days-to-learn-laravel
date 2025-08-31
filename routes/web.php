@@ -1,22 +1,10 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Job;
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::view('/', 'index');
+Route::view('/contact', 'contact');
 
-Route::get('/jobs', function () {
-    $job = Job::with('employer')->paginate(3);
+Route::resource('jobs', JobController::class);
 
-    return view('jobs', ['jobs' => $job]);
-});
-
-Route::get('/jobs/{id}', function($id) {
-    return view('job', ['job' => Job::find($id)]);
-});
-
-Route::get('/contact', function() {
-    return view('contact');
-});
